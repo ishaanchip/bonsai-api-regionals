@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({extended:false}))
 
 
 const corsOptions = {
-   origin:["http://localhost:3000", "https://bonsia-regionals.onrender.com"],
+   origin:"*",
    credentials:true,
    optionSuccessStatus:200
 }
