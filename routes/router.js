@@ -414,6 +414,43 @@ const OpenAI = require("openai")
             }
     })
     
+    //MAKING IT, BUT NOT REALLY GONNA USE RN
+    //saving user & gpt question-answer combo
+    router.put('/save-blossom-response', async(req, res) =>{
+        try{
+            let {username, userQuestion, aiResponse} = req.body;
+            //est query for account
+            const accountQuery = schemas.BonsaiAccounts;
+            const blossomQueryInsert = {
+                "question":userQuestion,
+                "answer":aiResponse
+            }
+
+            /*schema
+                blossom_history:[
+                    {
+                        "question":userQuestion,
+                        "answer":aiResponse
+                    }
+                ]
+            */
+            
+
+            const result = await accountQuery.updateOne(
+                {"username":username},
+                {$push:{blossom_history: blossomQueryInsert}}
+                )
+
+            if (result.modifiedCount >  0){
+                res.status(200).json({success:true})
+            }
+
+
+        }
+        catch(err){
+            console.log(`There was an error saving blossom responses`)
+        }
+    })
 
 
     
